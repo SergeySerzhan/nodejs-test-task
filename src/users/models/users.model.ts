@@ -3,27 +3,27 @@ import {
   Model,
   Column,
   AllowNull,
-  PrimaryKey,
   DataType,
+  PrimaryKey,
 } from 'sequelize-typescript';
 
 @Table({ underscored: true })
 export class User extends Model {
-  @Column
-  @PrimaryKey
   @AllowNull(false)
+  @PrimaryKey
+  @Column
   email: string;
 
-  @Column
   @AllowNull(false)
+  @Column
   firstName: string;
 
-  @Column
   @AllowNull(false)
+  @Column
   lastName: string;
 
-  @Column
   @AllowNull(false)
+  @Column(DataType.BLOB)
   image: string;
 
   @Column(DataType.BLOB)

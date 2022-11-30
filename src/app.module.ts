@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import 'dotenv/config';
+
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import 'dotenv/config';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadModels: true,
+      synchronize: true,
     }),
   ],
 })
