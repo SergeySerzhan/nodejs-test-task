@@ -11,6 +11,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
@@ -23,8 +24,10 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { checkData } from '../../shared/utils/check-data';
 import { AuthGuard } from '../../auth/guards/auth.guard';
+import { UserEntity } from '../entities/user.entity';
 
 @Controller({ path: 'users', version: '1' })
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -43,14 +46,15 @@ export class UsersController {
     )
     image: Express.Multer.File,
   ) {
-    const user = this.usersService.create(createUserDto, image);
-    return user;
+    const user = await this.usersService.create(createUserDto, image);
+    return new UserEntity(user);
   }
 
   @Get()
   @UseGuards(AuthGuard)
   async findAll() {
-    return this.usersService.findAll();
+    const users = await this.usersService.findAll();
+    return users.map((user) => new UserEntity(user));
   }
 
   @Get('email')
@@ -61,7 +65,7 @@ export class UsersController {
 
     checkData(user);
 
-    return user;
+    return new UserEntity(user);
   }
 
   @Patch()
@@ -85,7 +89,7 @@ export class UsersController {
 
     checkData(user);
 
-    return user;
+    return new UserEntity(user);
   }
 
   @Delete()

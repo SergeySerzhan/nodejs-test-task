@@ -18,7 +18,8 @@ export class UsersRepository {
   }
 
   async findAll() {
-    return this.userModel.findAll();
+    const users = await this.userModel.findAll();
+    return users.map((user) => user.toJSON());
   }
 
   async findOne(email: string): Promise<User> {

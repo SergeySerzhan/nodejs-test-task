@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "b4146d43-e4e6-4e71-9bac-b539dd354678",
+		"name": "users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15495793"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "sergeyserzhan@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "Sergey",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Serzhan",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/D:/21 06 Сергей Лт(скачать до 22 07)/ретушь/4G1A1005.jpg"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/v1/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlcmdleXNlcnpoYW5AZ21haWwuY29tIiwiaWF0IjoxNjY5OTA4MTAwLCJleHAiOjE2Njk5MTE3MDB9.Fut5qnYCswcRUbedZH40I52JFHIwAQH9OmkQHAwIiw4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/v1/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlcmdleXNlcnpoYW5AZ21haWwuY29tIiwiaWF0IjoxNjY5OTA4MTAwLCJleHAiOjE2Njk5MTE3MDB9.Fut5qnYCswcRUbedZH40I52JFHIwAQH9OmkQHAwIiw4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sergeyserzhan@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/v1/users/email",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"users",
+						"email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user by email",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlcmdleXNlcnpoYW5AZ21haWwuY29tIiwiaWF0IjoxNjY5OTA4MTAwLCJleHAiOjE2Njk5MTE3MDB9.Fut5qnYCswcRUbedZH40I52JFHIwAQH9OmkQHAwIiw4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "updatedEmail",
+							"value": "sergeyserzhan@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/sserg/Downloads/640px-Image_created_with_a_mobile_phone.png"
+						},
+						{
+							"key": "firstName",
+							"value": "Andrey",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/v1/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlcmdleXNlcnpoYW5AZ21haWwuY29tIiwiaWF0IjoxNjY5OTA4MTAwLCJleHAiOjE2Njk5MTE3MDB9.Fut5qnYCswcRUbedZH40I52JFHIwAQH9OmkQHAwIiw4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sergeyserzhan@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/v1/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate pdf",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlcmdleXNlcnpoYW5AZ21haWwuY29tIiwiaWF0IjoxNjY5OTA4MTAwLCJleHAiOjE2Njk5MTE3MDB9.Fut5qnYCswcRUbedZH40I52JFHIwAQH9OmkQHAwIiw4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sergeyserzhan@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/v1/users/pdf",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"users",
+						"pdf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sergeyserzhan@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/v1/auth/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
