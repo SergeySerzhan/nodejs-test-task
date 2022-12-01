@@ -23,9 +23,13 @@ export class User extends Model {
   lastName: string;
 
   @AllowNull(false)
-  @Column(DataType.BLOB)
+  @Column(DataType.TEXT)
   image: string;
 
   @Column(DataType.BLOB)
   pdf: string;
+
+  @AllowNull(false)
+  @Column
+  password: string;
 }

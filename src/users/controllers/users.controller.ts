@@ -10,17 +10,19 @@ import {
   ParseFilePipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 
 import { FileSizeValidator } from '../validators/file-size.validator';
-import { MimeTypes } from '../utils/mime-types';
+import { MimeTypes } from '../../shared/utils/mime-types';
 import { GetUserDto } from '../dto/get-user.dto';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { checkData } from '../utils/check-data';
+import { checkData } from '../../shared/utils/check-data';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -46,11 +48,13 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   async findAll() {
     return this.usersService.findAll();
   }
 
   @Get('email')
+  @UseGuards(AuthGuard)
   async findOne(@Body() getUserDto: GetUserDto) {
     const { email } = getUserDto;
     const user = await this.usersService.findOne(email);
@@ -61,6 +65,7 @@ export class UsersController {
   }
 
   @Patch()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   async update(
     @Body() updateUserDto: UpdateUserDto,
@@ -84,6 +89,7 @@ export class UsersController {
   }
 
   @Delete()
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Body() getUserDto: GetUserDto) {
     const { email } = getUserDto;
@@ -95,6 +101,7 @@ export class UsersController {
   }
 
   @Post('pdf')
+  @UseGuards(AuthGuard)
   async generatePdf(@Body() getUserDto: GetUserDto) {
     const { email } = getUserDto;
     const user = await this.usersService.generatePdf(email);

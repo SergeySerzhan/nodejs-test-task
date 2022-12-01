@@ -4,13 +4,20 @@ import PDFDocument from 'pdfkit';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UsersRepository } from '../data-access/users.repository';
+import { PasswordService } from '../../shared/services/password.service';
 
 @Injectable()
 export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
   async create(createUserDto: CreateUserDto, image: Express.Multer.File) {
-    return this.usersRepository.create(createUserDto, image);
+    return this.usersRepository.create(
+      {
+        ...createUserDto,
+        password: await PasswordService.hashPassword(createUserDto.password),
+      },
+      image.buffer.toString('base64'),
+    );
   }
 
   async findAll() {
@@ -36,7 +43,7 @@ export class UsersService {
     const pdf = new PDFDocument();
 
     pdf.text(`${user.firstName} ${user.lastName}`);
-    pdf.image(user.image, {
+    pdf.image(Buffer.from(user.image, 'base64'), {
       fit: [100, 100],
       align: 'center',
       valign: 'center',

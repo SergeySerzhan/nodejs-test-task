@@ -1,6 +1,6 @@
 import { FileValidator } from '@nestjs/common';
 
-import { MimeTypes } from '../utils/mime-types';
+import { MimeTypes } from '../../shared/utils/mime-types';
 
 type FileSizeValidationOptions = {
   fileType: MimeTypes[];

@@ -9,13 +9,10 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 export class UsersRepository {
   constructor(@InjectModel(User) private userModel: typeof User) {}
 
-  async create(
-    createUserDto: CreateUserDto,
-    image: Express.Multer.File,
-  ): Promise<User> {
+  async create(createUserDto: CreateUserDto, image: string): Promise<User> {
     const user = await this.userModel.create({
       ...createUserDto,
-      image: image.buffer,
+      image,
     });
     return user ? user.toJSON() : user;
   }
