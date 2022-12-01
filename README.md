@@ -1,73 +1,169 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is simple CRUD API for managing users entities.
 
 ## Installation
 
+You need to clone or fork this repository and run:
+
 ```bash
-$ npm install
+npm install
+```
+
+to install all dependencies.
+
+Install DB [PostgreSQL](https://www.postgresql.org/) on your machine or use a free web hosting services for PostgreSQL (https://www.heroku.com/postgres or https://www.elephantsql.com/plans.html).
+
+Rename .env.example file to .env. You need to change .env file and provide your PostgreSQL database credentials.
+
+To create database you can run :
+
+```bash
+npm run db:create
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+npm run start:dev
 
-# watch mode
-$ npm run start:dev
+# production
+npm run start:prod
 
-# production mode
-$ npm run start:prod
+# build
+npm run build
 ```
 
-## Test
+Application starts on PORT 3000 (you can change this in .env file), default URL http://localhost:3000
 
-```bash
-# unit tests
-$ npm run test
+## Usage
 
-# e2e tests
-$ npm run test:e2e
+You can use [Postman](https://www.postman.com/) to send requests to server. All endpoints (except POST /v1/auth/login and POST /v1/users) are protected, that means you need authorize (login).
 
-# test coverage
-$ npm run test:cov
+<details>
+<summary>Auth endpoints</summary>
+
+### POST /v1/auth/login
+
+Login user. Request should contain body in JSON format. Request body example:
+
+```json
+{
+  "email": "sergeyserzhan@mail.ru",
+  "password": "12345678qwe"
+}
 ```
 
-## Support
+Response example:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YjFkZWI0ZC0zYjdkLTRiYWQtOWJkZC0yYjBkN2IzZGNiNmQiLCJpYXQiOjE1MTYyMzkwMjJ9.A7RPWdhfOusPgTTbdZSskLRezAHR4yDzoa2Enyxhwlc"
+}
+```
 
-## Stay in touch
+</details>
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+<details>
+<summary>Users endpoints</summary>
 
-## License
+### POST /v1/users
 
-Nest is [MIT licensed](LICENSE).
+Create user. Request should contain form-data with fields:
+
+email: string
+firstName: string
+lastName: string
+password: string
+image: (mime-types for image is PNG, JPG)
+
+Response example:
+
+```json
+{
+  "email": "sergeyserzhan@gmail.com",
+  "firstName": "Sergey",
+  "lastName": "Serzhan",
+  "image": "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG...5vdCBvbm",
+  "pdf": null || Buffer
+}
+```
+
+### GET /v1/users/
+
+Get all users. Response example:
+
+```json
+[
+  {
+  "email": "sergeyserzhan@gmail.com",
+  "firstName": "Sergey",
+  "lastName": "Serzhan",
+  "image": "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG...5vdCBvbm",
+  "pdf": null || Buffer
+  }
+]
+```
+
+### GET /v1/users/email
+
+Get user by email. Request should contain body in JSON format:
+
+```json
+{
+  "email": "sergeyserzhan@gmail.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "email": "sergeyserzhan@gmail.com",
+  "firstName": "Sergey",
+  "lastName": "Serzhan",
+  "image": "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG...5vdCBvbm",
+  "pdf": null || Buffer
+}
+```
+
+### PATCH /v1/users/
+
+Update existing user by email. Request should contain form-data with fields:
+
+updatedEmail: string
+
+(Notice: all fields above not required)
+
+email: string
+firstName: string
+lastName: string
+password: string
+image: (mime-types for image is PNG, JPG)
+
+Response example:
+
+```json
+{
+  "email": "sergeyserzhan@gmail.com",
+  "firstName": "Sergey",
+  "lastName": "Serzhan",
+  "image": "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG...5vdCBvbm",
+  "pdf": null || Buffer
+}
+```
+
+### DELETE /v1/users/
+
+Delete user by email. Request should contain body in JSON format:
+
+```json
+{
+  "email": "sergeyserzhan@gmail.com"
+}
+```
+
+Response with 204 status code No-Content.
+
+</details>

@@ -24,7 +24,7 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { checkData } from '../../shared/utils/check-data';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 
-@Controller('users')
+@Controller({ path: 'users', version: '1' })
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

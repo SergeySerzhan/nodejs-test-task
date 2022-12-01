@@ -11,7 +11,7 @@ import { LoginDto } from '../dto/login.dto';
 import { AuthService } from '../services/auth.service';
 import { ErrorMessages } from '../../shared/utils/error-msgs';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 
