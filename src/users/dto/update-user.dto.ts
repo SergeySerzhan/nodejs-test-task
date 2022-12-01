@@ -9,4 +9,6 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   updatedEmail: string;
 
   image?: string;
+
+  pdf?: any;
 }

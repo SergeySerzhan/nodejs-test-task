@@ -12,7 +12,7 @@ export class UsersRepository {
   async create(createUserDto: CreateUserDto, image: Express.Multer.File) {
     const user = await this.userModel.create({
       ...createUserDto,
-      image: image.buffer.toString('base64'),
+      image: image.buffer,
     });
     return user ? user.toJSON() : user;
   }

@@ -77,4 +77,10 @@ export class UsersController {
     const { email } = getUserDto;
     return this.usersService.remove(email);
   }
+
+  @Post('pdf')
+  async generatePdf(@Body() getUserDto: GetUserDto) {
+    const { email } = getUserDto;
+    return this.usersService.generatePdf(email);
+  }
 }
