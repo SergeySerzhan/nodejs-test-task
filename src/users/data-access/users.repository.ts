@@ -9,7 +9,10 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 export class UsersRepository {
   constructor(@InjectModel(User) private userModel: typeof User) {}
 
-  async create(createUserDto: CreateUserDto, image: Express.Multer.File) {
+  async create(
+    createUserDto: CreateUserDto,
+    image: Express.Multer.File,
+  ): Promise<User> {
     const user = await this.userModel.create({
       ...createUserDto,
       image: image.buffer,
@@ -21,12 +24,15 @@ export class UsersRepository {
     return this.userModel.findAll();
   }
 
-  async findOne(email: string) {
+  async findOne(email: string): Promise<User> {
     const user = await this.userModel.findByPk(email);
     return user ? user.toJSON() : user;
   }
 
-  async update(updateUserDto: UpdateUserDto, image?: Express.Multer.File) {
+  async update(
+    updateUserDto: UpdateUserDto,
+    image?: Express.Multer.File,
+  ): Promise<User> {
     const email = updateUserDto.updatedEmail;
 
     const updateUser = { ...updateUserDto };

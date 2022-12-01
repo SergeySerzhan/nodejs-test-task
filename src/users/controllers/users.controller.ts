@@ -8,6 +8,8 @@ import {
   UseInterceptors,
   UploadedFile,
   ParseFilePipe,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
@@ -18,6 +20,7 @@ import { GetUserDto } from '../dto/get-user.dto';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { checkData } from '../utils/check-data';
 
 @Controller('users')
 export class UsersController {
@@ -50,7 +53,11 @@ export class UsersController {
   @Get('email')
   async findOne(@Body() getUserDto: GetUserDto) {
     const { email } = getUserDto;
-    return this.usersService.findOne(email);
+    const user = await this.usersService.findOne(email);
+
+    checkData(user);
+
+    return user;
   }
 
   @Patch()
@@ -69,18 +76,29 @@ export class UsersController {
     )
     image: Express.Multer.File,
   ) {
-    return this.usersService.update(updateUserDto, image);
+    const user = await this.usersService.update(updateUserDto, image);
+
+    checkData(user);
+
+    return user;
   }
 
   @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Body() getUserDto: GetUserDto) {
     const { email } = getUserDto;
-    return this.usersService.remove(email);
+    const numberOfDeletedUsers = await this.usersService.remove(email);
+
+    checkData(numberOfDeletedUsers);
+
+    return;
   }
 
   @Post('pdf')
   async generatePdf(@Body() getUserDto: GetUserDto) {
     const { email } = getUserDto;
-    return this.usersService.generatePdf(email);
+    const user = await this.usersService.generatePdf(email);
+    const result = !user || !user.pdf || user.pdf.length === 0 ? false : true;
+    return { result };
   }
 }
