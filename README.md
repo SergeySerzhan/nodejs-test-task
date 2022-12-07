@@ -39,7 +39,7 @@ Application starts on PORT 3000 (you can change this in .env file), default URL 
 
 ## Usage
 
-You can use [Postman](https://www.postman.com/) to send requests to server. All endpoints (except POST /v1/auth/login and POST /v1/users) are protected, that means you need authorize (login).
+You can use [Postman](https://www.postman.com/) to send requests to server. All endpoints (except POST /v1/auth/login and POST /v1/users) are protected, that means you need authorize (login) and provide token with "Authorization": "Bearer ${token}" header.
 
 <details>
 <summary>Auth endpoints</summary>
@@ -165,5 +165,23 @@ Delete user by email. Request should contain body in JSON format:
 ```
 
 Response with 204 status code No-Content.
+
+### POST /v1/users/pdf
+
+Generate pdf for provided user. Request should contain body in JSON format:
+
+```json
+{
+  "email": "sergeyserzhan@gmail.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "result": true;
+}
+```
 
 </details>
